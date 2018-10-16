@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,7 +23,7 @@ public class Persona implements Serializable{
 	private static final long serialVersionUID = 1557149058396824292L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	private String nombre;
@@ -32,6 +33,12 @@ public class Persona implements Serializable{
 	@Column(name="fecha_nacimiento")
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
+	
+	@PrePersist
+	public void prePersist() {
+		fechaNacimiento = new Date();
+	}
+	
 	public Long getId() {
 		return id;
 	}

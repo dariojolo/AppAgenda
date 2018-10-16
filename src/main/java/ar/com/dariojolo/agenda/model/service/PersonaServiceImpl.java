@@ -1,6 +1,7 @@
 package ar.com.dariojolo.agenda.model.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,24 @@ public class PersonaServiceImpl implements IPersonaService{
 	@Transactional(readOnly=true)
 	public List<Persona> findAll() {
 		return (List<Persona>)personaDao.findAll();
+	}
+
+	@Override
+	@Transactional
+	public Persona save(Persona persona) {
+		return personaDao.save(persona);
+	}
+
+	@Override
+	@Transactional
+	public void delete(Long id) {
+		personaDao.deleteById(id);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Persona findById(Long id) {
+		return personaDao.findById(id).orElse(null);
 	}
 
 }
